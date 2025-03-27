@@ -1,0 +1,3 @@
+#define VERSION_MAJOR @solveutil_VERSION_MAJOR@
+#define VERSION_MINOR @solveutil_VERSION_MINOR@
+#define VERSION_PATCH @solveutil_VERSION_PATCH@
