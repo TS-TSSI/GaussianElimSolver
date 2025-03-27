@@ -4,15 +4,6 @@
 #include <assert.h>
 #include <optional>
 
-#define DEBUG_PRINTING_VERBOSE 0
-#if DEBUG_PRINTING_VERBOSE
-    #define DEBUG_PRINT_MSG(___fmt___, ...) printf(___fmt___, __VA_ARGS__)
-    #define DEBUG_PRINT_MAT(___mat___) do{ PrintMatrix(___mat___); } while(0)
-#else    
-    #define DEBUG_PRINT_MSG(___fmt___, ...)
-    #define DEBUG_PRINT_MAT(___mat___)
-#endif
-
 static void MultiplyRowBy(Solver::Matrix& m, size_t rowIndex, Solver::Fractional multiplier)
 {
     const auto width = m.Width();
@@ -85,7 +76,6 @@ static void Jordan(Solver::Matrix& augmentedMatrix)
             const auto leadingValue = augmentedMatrix.at(x, y);
             if(leadingValue.IsZero())
                 continue;
-            DEBUG_PRINT_MSG("row %lu leading value found: (%d/%d) \n", y, leadingValue.nom, leadingValue.den);
             for(size_t r = y; r-- > 0;)
             {
                 const auto& elem = augmentedMatrix.at(x, r);
