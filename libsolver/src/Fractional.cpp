@@ -55,7 +55,7 @@ namespace Solver
     bool Fractional::IsZero() const  { return (nom == 0); }
     void Fractional::Reduce()
     {
-        if(den < 0)
+        if(den < 0)  // Keep denom positive
         {
             nom = -nom;
             den = -den;
@@ -78,20 +78,14 @@ namespace Solver
     Fractional operator +(const Fractional& a, const Fractional& b)
     {
         if(a.den == b.den)
-        {
             return { a.nom + b.nom, a.den };
-        }
-        else
-        {
-            const int32_t newNominator = a.nom * b.den + b.nom * a.den;
-            const int32_t newDenominator = (newNominator == 0) ? 1 : a.den * b.den;
-            return { newNominator, newDenominator };
-        }
+        Fractional out = { a.nom * b.den + b.nom * a.den, a.den * b.den };
+        out.Reduce();
+        return out;
     }
     Fractional operator *(const Fractional& a, const Fractional& b)
     {
-        const auto newNominator = a.nom * b.nom;
-        Fractional out{ newNominator, (newNominator == 0) ? 1 : a.den * b.den };
+        Fractional out{ a.nom * b.nom, a.den * b.den };
         out.Reduce();
         return out;
     }
